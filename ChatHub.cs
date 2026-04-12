@@ -4,9 +4,16 @@ namespace Chat_SignalIR
 {
     public class ChatHub:Hub
     {
-        public  async Task SendMessage(string user, string message)
+    
+        public async Task SendMessage(string user, string text)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            var msg = new Message
+            {
+                Timestamp = DateTime.Now,
+                User = user,
+                Text = text
+            }; 
+            await Clients.All.SendAsync("ReceiveMessage", msg);
         }
     }
 }
